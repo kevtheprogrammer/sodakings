@@ -4,7 +4,10 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path
 
+from product.views import *
+
 urlpatterns = [
+    path("", IndexView.as_view(),name='index'),
     path("admin/", admin.site.urls),
 ]
 

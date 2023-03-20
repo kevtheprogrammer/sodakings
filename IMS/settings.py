@@ -31,7 +31,8 @@ INSTALLED_APPS = [
 
 LOCAL_APPS = [
     'acc',
-    # 'stock',
+    'product',
+    'transactions',
     #...
     ]
 

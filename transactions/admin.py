@@ -13,13 +13,13 @@ class PurchaseItemAdmin(admin.ModelAdmin):
     search_fields = ('quantity','perprice', 'totalprice' ,) 
   
   
-@admin.register(PurchaseBill)
-class PurchaseBillAdmin(admin.ModelAdmin):
+@admin.register(SaleBill)
+class SaleBillAdmin(admin.ModelAdmin):
     list_display = ('customer','destination','sgst','igst', 'cess','tcs' )
     search_fields = ('destination','cgst','sgst',) 
   
-@admin.register(PurchaseItem)
-class PurchaseItemAdmin(admin.ModelAdmin):
+@admin.register(SaleItem)
+class SaleItemAdmin(admin.ModelAdmin):
     list_display = ('billno','stock','quantity','perprice', 'totalprice'  )
     search_fields = ('quantity','perprice', 'totalprice' ,) 
   

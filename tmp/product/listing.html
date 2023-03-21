@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block meta %}
+{% endblock  %}
+
+{% block title %}
+Products | SodaKings
+{% endblock  %}
+
+
+{% block body %}
+<main class="content">
+    <div class="container-fluid p-0">
+
+        <div class="mb-3 d-flex justify-content-between">
+            <h1 class="h3 d-inline align-middle">Products</h1>
+            <div>
+                <a class="btn btn-outline-primary rounded-pill" href="{% url 'product:add' %}"><i class="align-middle" data-feather="plus"></i> Add Product</a>
+            </div>
+        </div>
+        <div class="row">
+            {% for obj in object_list %}    
+            <div class="col-12 col-md-4">
+                <div class="card">
+                    <div class="card-img-top" style="
+                        background-image: url({{obj.thumb.url}});
+                        width: 100%;
+                        height: 250px;
+                        background-repeat:no-repeat;
+                        background-size: 100% auto;
+                        background-position: center center;
+                    "></div>    
+                    <div class="card-header d-flex justify-content-between">
+                        <h5 class="card-title mb-0">{{obj.name}}</h5>
+                        <a class="card-link">ZMK {{obj.price}}</a>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{obj.description}}</p>
+ 
+                        <a class="btn btn-primary col-12 mb-2">See Stock Level  </a>
+
+                        <span class="text-secondary"><i class="align-middle" data-feather="clock"></i> {{obj.updated}}</span>
+                    </div>
+                </div>
+            </div>    
+            {% endfor %}
+        </div>
+
+    </div>
+    
+</main>
+
+{% endblock  %}
+
+
+{% block js %}
+{% endblock  %}

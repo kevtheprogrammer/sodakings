@@ -1,6 +1,8 @@
+{% with url_name=request.resolver_match.url_name %}
 <nav id="sidebar" class="sidebar js-sidebar">
+  
     <div class="sidebar-content js-simplebar">
-        <a class="sidebar-brand" href="index.html">
+        <a class="sidebar-brand" href="{% url 'index' %}">
         <span class="align-middle">SodaKings</span>
         </a>
 
@@ -9,8 +11,8 @@
                 Account
             </li>
 
-            <li class="sidebar-item active">
-                <a class="sidebar-link" href="">
+            <li class="sidebar-item {% if url_name == 'index' %}active{% endif %} ">
+                <a class="sidebar-link " href="{% url 'index' %}">
                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
                 </a>
             </li>
@@ -22,24 +24,40 @@
             </li>
 
 
-
             <li class="sidebar-header">
                 Stock & Products
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="">
+            <li class="sidebar-item  {% if url_name == 'listing' %}active{% endif %} ">
+                <a class="sidebar-link" href="{% url 'product:listing' %}">
                     <i class="align-middle" data-feather="package"></i> <span class="align-middle">Product</span>
                 </a>
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="">
+                <a class="sidebar-link" href="{% url 'product:stock_listing' %}">
                     <i class="align-middle" data-feather="home"></i> <span class="align-middle">Stock</span>
                 </a>
             </li>
 
  
+            
+            <li class="sidebar-header">
+                transactions
+            </li>
+
+            <li class="sidebar-item  {% if url_name == 'listing' %}active{% endif %} ">
+                <a class="sidebar-link" href=" ">
+                    <i class="align-middle" data-feather="truck"></i> <span class="align-middle">Purchase</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href=" ">
+                    <i class="align-middle" data-feather="activity"></i> <span class="align-middle">Sells</span>
+                </a>
+            </li>
+
 
      
 
@@ -54,5 +72,6 @@
             </li>
 
  
-    </div>
-</nav>
+        </div>
+    </nav>
+    {% endwith %}

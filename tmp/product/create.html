@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block meta %}
+{% endblock  %}
+
+{% block title %}
+Add Product | SodaKings
+{% endblock  %}
+
+
+{% block body %}
+<main class="content">
+    <div class="mb-3">
+        <h1 class="h3 d-inline align-middle">Add Product</h1>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="card">
+                <form action="/products/add/" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        <h5 class="card-title mb-2"  for="id_thumb"> Thumb(cover image)*:</h5>
+                        <input class="form-control mb-3" type="file" name="thumb" accept="image/*" required="" id="id_thumb">
+       
+                        <h5 class="card-title mb-2"  for="id_name"> Name*:</h5>
+                        <input class="form-control mb-3" type="text" name="name" maxlength="50" required="" id="id_name">
+       
+                        <h5 class="card-title mb-2"  for="id_price"> Price:</h5>
+                        <input class="form-control mb-3" type="number" name="price" step="0.01" required="" id="id_price">
+            
+                        <h5 class="card-title mb-2"  for="id_description"> Description:</h5>
+                        <textarea class="form-control mb-3"  name="description" cols="40" rows="5" required="" id="id_description"></textarea>
+                        <h5 class="card-title mb-2"  for="id_slug"> Slug:</h5>
+                        <input  class="form-control mb-3" type="text" name="slug" maxlength="50" required="" id="id_slug">
+                        <button type="submit" class="mx-2 btn btn-primary " >Submit</button>
+                    </div>
+                </form>
+            </div>
+     </div>
+    </div>
+</main>
+
+{% endblock  %}
+
+
+{% block js %}
+<script>
+    const titleInput = document.querySelector('input[name=name]');
+    const slugInput = document.querySelector('input[name=slug]');
+
+    const slugfy = (val) => {
+        return val.toString().toLowerCase().trim()
+            .replace(/&/g,'-and-')
+            .replace(/[\s\W-]+/g,'-')
+    };
+
+    titleInput.addEventListener('keyup',(e) => {
+        slugInput.setAttribute('value',slugfy(titleInput.value));
+    });
+</script>
+{% endblock  %}

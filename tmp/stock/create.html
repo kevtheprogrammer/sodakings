@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block meta %}
+{% endblock  %}
+
+{% block title %}
+Add Product | SodaKings
+{% endblock  %}
+
+
+{% block body %}
+<main class="content">
+    <div class="mb-3">
+        <h1 class="h3 d-inline align-middle">Add Stoc</h1>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="card">
+                <form action="/products/stock/add/" method="post" >
+                    {% csrf_token %}
+                    <div class="card-body">
+                        <label class="card-title mb-2" for="id_name">Name:</label>
+                        <input class="form-control mb-3" type="text" name="name" maxlength="500" required="" id="id_name">
+                        <label class="card-title mb-2" for="id_prod">Prod:</label>
+                        {{form.prod}}
+                        <label class="card-title mb-2" for="id_quantity">Quantity:</label>
+                        <input class="form-control mb-3" type="number" name="quantity" value="1" required="" id="id_quantity">
+                        <label class="card-title mb-2" for="id_slug">Slug:</label>
+                        <input class="form-control mb-3" type="text" name="slug" maxlength="50" required="" id="id_slug">
+                        <button type="submit" class="mx-2 btn btn-primary " >Submit</button>
+                    </div> 
+                </form>
+            </div>
+     </div>
+    </div>
+</main>
+
+{% endblock  %}
+
+
+{% block js %}
+<script>
+    const titleInput = document.querySelector('input[name=name]');
+    const slugInput = document.querySelector('input[name=slug]');
+
+    const slugfy = (val) => {
+        return val.toString().toLowerCase().trim()
+            .replace(/&/g,'-and-')
+            .replace(/[\s\W-]+/g,'-')
+    };
+
+    titleInput.addEventListener('keyup',(e) => {
+        slugInput.setAttribute('value',slugfy(titleInput.value));
+    });
+</script>
+{% endblock  %}

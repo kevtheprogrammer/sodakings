@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+Products | SodaKings
+{% endblock  %}
+
+
+{% block body %}
+<main class="content">
+   <div class="container-fluid p-0">
+       
+        <div class="mb-3 ">
+            <h2>Purchase Bills</h2>
+        </div>
+        <div class="col-12">
+            <div class="d-flex my-2">
+                <div><a href="{% url 'txn:sales' %}">Sales /</a></div>
+                <div class="mx-2">{{object}}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-7 card col-xxl-9 d-flex">
+                <div class="card-body">
+                    <h1 class="h3 d-inline align-middle">Sales Bill No. {{object.pk}}</h1>        
+                    <div class="card-head ">Customer: {{object.customer}}</div>
+                    <div class="card-head">Destination: {{object.destination}}</div>
+                    <div class="card-head">Tax: ZMK {{object.get_total_tax}}</div>
+                    <ul class="list-group my-4">
+                        <li class="list-group-item active">Sales Item(s)</li>
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Stock Name</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total Price</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for i in s_items %}  
+                              <tr>
+                                <th scope="row">{{i.id}}</th>
+                                <td>{{i.stock}}</td>
+                                <td>{{i.quantity}}</td>
+                                <td>ZMK  {{i.totalprice}}</td>
+                              </tr>
+                              {% endfor  %} 
+                            </tbody>
+                          </table>
+                    </ul>
+  
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 mx-4 card col-xxl-9 d-flex">
+                <div class="card-body">
+                    <h4>Add Sales Item </h5>
+                    <form action="/transactions/sales/{{object.id}}/add/" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form|crispy}}
+                        <button class="btn btn-primary my-3" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>  
+        
+</main> 
+{% endblock  %}
+
+
+ 

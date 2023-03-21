@@ -15,8 +15,31 @@ class PurchaseBillForm(ModelForm):
         )
         
         widgets = {
-            'supplier': forms.RadioSelect(),
             'po': forms.ClearableFileInput(),
 		}
 
- 
+
+class PurchaseItemForm(ModelForm):
+    class Meta:
+        model = PurchaseItem 
+        fields = (
+			'stock', 
+			'quantity', 'perprice', 'totalprice',  
+        )
+      
+class SaleBillForm(ModelForm):
+    class Meta:
+        model = SaleBill 
+        fields = (
+			'gstin', 'customer',
+			'destination', 'po', 'cgst', 'sgst', 'igst', 'cess','tcs'
+        )
+
+
+class SaleItemForm(ModelForm):
+    class Meta:
+        model = SaleItem 
+        fields = (
+			'stock', 
+			'quantity', 'perprice', 'totalprice',  
+        )

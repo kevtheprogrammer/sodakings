@@ -30,9 +30,6 @@ class PurchaseBill(models.Model):
     def __str__(self):
         return "Bill no: " + str(self.pk)
     
-    def get_items_list(self):
-        return PurchaseItem.objects.filter(pk=self)
-
     def get_total_price(self):
         purchaseitems = PurchaseItem.objects.filter(pk=self.id)
         total = 0
@@ -49,7 +46,7 @@ class PurchaseItem(models.Model):
     maker = models.ForeignKey(User, related_name="maker", on_delete=models.CASCADE)
 
     def __str__(self):
-	    return "Bill no: " + str(self.billno.pk) + ", Item = " + self.stock.name
+	    return "Bill no: " + str(self.stocbillno.pk) + ", Item = " + self.stock.name
 
 class SaleBill(models.Model):
     customer = models.ForeignKey(User, related_name="customer", on_delete=models.CASCADE)
@@ -62,7 +59,13 @@ class SaleBill(models.Model):
     cess = models.CharField(max_length=50, blank=True, null=True)
     tcs = models.CharField(max_length=50, blank=True, null=True)
     staff = models.ForeignKey(User,default=None, related_name="staff", on_delete=models.CASCADE)
-    
+
+    def get_final_price(self):
+        return self.get_total_tax() + self.get_total_price()
+        
+    def get_absolute_url(self):
+        return reverse('txn:s_edit', args=[self.pk])
+     
     def __str__(self):
         return "Bill no: " + str(self.pk)
 
@@ -70,12 +73,15 @@ class SaleBill(models.Model):
         return SaleItem.objects.filter(pk=self)
         
     def get_total_price(self):
-        saleitems = SaleItem.objects.filter(pk=self)
+        saleitems = SaleItem.objects.filter(pk=self.pk)
         total = 0
         for item in saleitems:
             total += item.totalprice
         return total
-
+   
+    def get_total_tax(self):
+        return int(self.cgst) + int(self.sgst) + int(self.igst) + int(self.cess)  + int(self.tcs)
+   
 class SaleItem(models.Model):
     billno = models.ForeignKey(SaleBill, on_delete = models.CASCADE, related_name='salebillno')
     stock = models.ForeignKey(StockModel, on_delete = models.CASCADE, related_name='saleitem')

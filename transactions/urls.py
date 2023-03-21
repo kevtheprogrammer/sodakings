@@ -7,8 +7,8 @@ app_name = 'txn'
 urlpatterns = [
     path('',PurchaseView.as_view(),name='purchase'),    
     path('purchase-bill/<int:pk>/edit/',PurchaseEditView.as_view(),name='p_edit'),    
-    # path('stock/',StockListView.as_view(),name='stock_listing'),    
-    # path('stock/add/',StockCreateView.as_view(),name='stock_add'),    
+    path('sales/',SellView.as_view(),name='sales'),    
+    path('sales/<int:pk>/add/',SellViewEditView.as_view(),name='s_edit'),    
 ]
 
  

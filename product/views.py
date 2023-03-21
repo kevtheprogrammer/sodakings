@@ -7,6 +7,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
 from .models import *
+from acc.models import *
+from transactions.models import *
 from .forms import *
 
 
@@ -16,6 +18,10 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["stock_list"] = StockModel.objects.all() 
+        context["t_customers"] = User.objects.all().count() 
+        context["t_suppliers"] = User.objects.all().count() 
+        context["t_sales"] = SaleItem.objects.all().count() 
+        context["t_supplies"] = PurchaseItem.objects.all().count() 
         return context
     
 

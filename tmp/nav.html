@@ -52,8 +52,8 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href=" ">
+            <li class="sidebar-item {% if url_name == 'sales' %}active{% endif %}">
+                <a class="sidebar-link" href="{% url 'txn:sales' %}">
                     <i class="align-middle" data-feather="activity"></i> <span class="align-middle">Sells</span>
                 </a>
             </li>

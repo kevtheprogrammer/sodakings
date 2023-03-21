@@ -76,8 +76,6 @@ class ActivateAccount(View):
             messages.warning(request, ('The confirmation link was invalid, possibly because it has already been used.'))
             return redirect('home')
 
-
-
 class UserEditCreateView(CreateView):
     template_name = 'account/edit.html'
     models = User

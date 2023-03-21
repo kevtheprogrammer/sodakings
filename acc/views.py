@@ -11,11 +11,11 @@ from django.contrib import messages
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import login , logout
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+ 
 from .tokens import email_activation_token
 from .models import User
-from .userForms import SignUpForm
-from acc.userForms import UserEditForm
-from farmer.models import FarmPlotModel
+from .forms import *
 
 
 class SignUpView(View):
@@ -75,4 +75,29 @@ class ActivateAccount(View):
         else:
             messages.warning(request, ('The confirmation link was invalid, possibly because it has already been used.'))
             return redirect('home')
+
+
+
+class UserEditCreateView(CreateView):
+    template_name = 'account/edit.html'
+    models = User
+    form_class = UserEditForm
+
+    def get(self, request, *args, **kwargs):
+        me = self.request.user
+        context = {
+            "form":self.form_class(instance=me),
+            "User":User.objects.get(id=me.id),
+        } 
+        return render(request,self.template_name,context)
+
+
+    def post(self, request, *args, **kwargs): 
+        me = self.request.user
+        forms = UserEditForm(self.request.POST,self.request.FILES,instance=me)
+        if forms.is_valid():
+            forms.save()
+            return redirect("index")
+ 
+        return render(request,self.template_name)
 

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block meta %}
+{% endblock  %}
+
+{% block title %}
+Products | SodaKings
+{% endblock  %}
+
+
+{% block body %}
+<main class="content">
+   <div class="container-fluid p-0">
+       
+        <div class="mb-3 d-flex justify-content-between">
+            <h1 class="h3 d-inline align-middle">Purchase Bill No. {{object.pk}}</h1>        
+ 
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-8 card col-xxl-9 d-flex">
+                <div class="card-body">
+                    <div class="card-head">Bill by {{object.supplier}}</div>
+                </div>
+            </div>
+        </div>
+    </div>  
+        
+</main> 
+{% endblock  %}
+
+
+{% block js %}
+{% endblock  %}

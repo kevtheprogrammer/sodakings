@@ -9,6 +9,9 @@ urlpatterns = [
     path("", IndexView.as_view(),name='index'),
     path("admin/", admin.site.urls),
     path("products/", include('product.urls')),
+    path("account/", include('acc.urls')),
+    path("transactions/", include('transactions.urls')),
+    
 ]
 
 urlpatterns += staticfiles_urlpatterns()

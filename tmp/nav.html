@@ -17,8 +17,8 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="">
+            <li class="sidebar-item {% if url_name == 'edit' %}active{% endif %}">
+                <a class="sidebar-link" href="{% url 'account:edit' %}">
                     <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
                 </a>
             </li>
@@ -34,7 +34,7 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
+            <li class="sidebar-item {% if url_name == 'stock_listing' %}active{% endif %} ">
                 <a class="sidebar-link" href="{% url 'product:stock_listing' %}">
                     <i class="align-middle" data-feather="home"></i> <span class="align-middle">Stock</span>
                 </a>
@@ -46,8 +46,8 @@
                 transactions
             </li>
 
-            <li class="sidebar-item  {% if url_name == 'listing' %}active{% endif %} ">
-                <a class="sidebar-link" href=" ">
+            <li class="sidebar-item  {% if url_name == 'purchase' %}active{% endif %} ">
+                <a class="sidebar-link" href="{% url 'txn:purchase' %}">
                     <i class="align-middle" data-feather="truck"></i> <span class="align-middle">Purchase</span>
                 </a>
             </li>

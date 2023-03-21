@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
  
  
 from product.models import StockModel
@@ -16,6 +17,15 @@ class PurchaseBill(models.Model):
     updated   = models.DateField( auto_now=True )
     timestamp   = models.DateField( auto_now_add=True )
     author = models.ForeignKey(User, related_name="author", on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return reverse('txn:p_edit', args=[self.pk])
+ 
+    def get_final_price(self):
+        return self.get_total_tax() + self.get_total_price()
+    
+    def get_total_tax(self):
+        return int(self.cgst) + int(self.sgst) + int(self.igst) + int(self.cess)  + int(self.tcs)
    
     def __str__(self):
         return "Bill no: " + str(self.pk)
@@ -24,12 +34,12 @@ class PurchaseBill(models.Model):
         return PurchaseItem.objects.filter(pk=self)
 
     def get_total_price(self):
-        purchaseitems = PurchaseItem.objects.filter(pk=self)
+        purchaseitems = PurchaseItem.objects.filter(pk=self.id)
         total = 0
         for item in purchaseitems:
             total += item.totalprice
         return total
-
+    
 class PurchaseItem(models.Model):
     billno = models.ForeignKey(PurchaseBill, on_delete = models.CASCADE, related_name='purchasebillno')
     stock = models.ForeignKey(StockModel, on_delete = models.CASCADE, related_name='purchaseitem')

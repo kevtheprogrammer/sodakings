@@ -3,6 +3,7 @@ from django.db import models
 from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.urls import reverse
 
 # from django.urls import reverse
 
@@ -60,12 +61,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         '''
         print(subject, message, from_email,)
         # send_mail(subject, message, from_email, [self.email], **kwargs)
-        
-
-    def email_farmer_registration(self, subject, message, from_email=None, **kwargs):
-        '''
-        Sends an email to this User.
-        '''
-        print('\n',subject, '\n', message,'\n', from_email,'\n')
-        # send_mail(subject, message, from_email, [self.email], **kwargs)
-        
+    
+    def get_absolute_url(self):
+        return reverse('account:edit', args=[self.pk])

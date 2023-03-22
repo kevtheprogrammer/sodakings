@@ -125,10 +125,10 @@ USE_TZ = True
 
 
 STATIC_URL = "static/"
-LOGIN_URL = '/account/login'
+LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = '/'
 
-LOGOUT_REDIRECT_URL = '/account/login'
+LOGOUT_REDIRECT_URL = '/accounts/login'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "assets")
 
@@ -146,3 +146,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # CUSTOME DEFINED USER MODEL 
 AUTH_USER_MODEL = 'acc.User'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'user@gmail.com'
+# EMAIL_HOST_PASSWORD = 'password'

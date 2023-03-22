@@ -4,13 +4,15 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path,include
 from product.views import *
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
-    path("", IndexView.as_view(),name='index'),
+    path("", login_required(IndexView.as_view()),name='index'),
     path("admin/", admin.site.urls),
     path("products/", include('product.urls')),
-    path("account/", include('acc.urls')),
+    path("auth/", include('acc.urls')),
     path("transactions/", include('transactions.urls')),
+    path("accounts/", include('django.contrib.auth.urls')),
     
 ]
 

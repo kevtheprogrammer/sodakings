@@ -35,7 +35,6 @@ class SignUpView(View):
             user = form.save(commit=False)
             user.is_active = False #u need to deactivate account till it is confirmed
             user.save()
-            FarmPlotModel.objects.create(name="default",size="1 x 1(acres)",farm_location="default",user=user)
             #send activation email
 
             this_site = get_current_site(request)
@@ -51,7 +50,7 @@ class SignUpView(View):
 
             messages.success(request, ('We have sent a confirmation link to your email to activate your account\nPlease follow your email and click on the link!'))
 
-            return redirect('account:login')
+            return redirect('login')
 
         return render(request, self.template_name, {'form': form})
 
@@ -71,10 +70,10 @@ class ActivateAccount(View):
             user.save()
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             messages.success(request, ('Your email has been confirmed.'))
-            return redirect('home')
+            return redirect('index')
         else:
             messages.warning(request, ('The confirmation link was invalid, possibly because it has already been used.'))
-            return redirect('home')
+            return redirect('index')
 
 class UserEditCreateView(CreateView):
     template_name = 'account/edit.html'

@@ -1,9 +1,9 @@
 {% with url_name=request.resolver_match.url_name %}
 <nav id="sidebar" class="sidebar js-sidebar">
-  
+  {% load static %}
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="{% url 'index' %}">
-        <span class="align-middle">SodaKings</span>
+			<span class="align-middle mx-2 ">SodaKings</span>
         </a>
 
         <ul class="sidebar-nav">
@@ -66,12 +66,18 @@
             </li>
 
             <li class="sidebar-item">
-                <a class="sidebar-link" href="">
+                <a class="sidebar-link" href="{% url 'account:logout' %}">
                     <i class="align-middle" data-feather="log-out"></i> <span class="align-middle">Logout</span>
                 </a>
             </li>
 
- 
+
+            <div class="sidebar-cta">
+                <div class="sidebar-cta-content">
+                    <img src="{% static 'soda.jpeg' %}" alt="SodaKing Logo" class="img-fluid col-12 rounded" />
+
+                </div>
+            </div>
         </div>
     </nav>
     {% endwith %}

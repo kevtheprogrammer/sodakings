@@ -48,6 +48,11 @@ class ProductCreateView(CreateView):
         form = self.form_class(self.request.POST,self.request.FILES)
         if form.is_valid():
             form.save()
+            NotificationModel.objects.create(    
+                title = "New Product Added",
+                content = f"New User Account activated for {me}",
+                target = me,
+            )
             return redirect('product:listing')  
           
         return render(request,self.template_name,{'form':form})    

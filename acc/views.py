@@ -12,6 +12,8 @@ from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import login , logout
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from product.models import NotificationModel
  
 from .tokens import email_activation_token
 from .models import User
@@ -35,6 +37,13 @@ class SignUpView(View):
             user = form.save(commit=False)
             user.is_active = False #u need to deactivate account till it is confirmed
             user.save()
+            NotificationModel.objects.create(    
+                title = "User ceation",
+                content = f"New User Account created for {user}"  ,
+                target = user,
+            )
+   
+    
             #send activation email
 
             this_site = get_current_site(request)
@@ -94,6 +103,11 @@ class UserEditCreateView(CreateView):
         forms = UserEditForm(self.request.POST,self.request.FILES,instance=me)
         if forms.is_valid():
             forms.save()
+            NotificationModel.objects.create(    
+                title = "User Activation",
+                content = f"New User Account activated for {me}",
+                target = me,
+            )
             return redirect("index")
  
         return render(request,self.template_name)

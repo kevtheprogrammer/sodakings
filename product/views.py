@@ -45,13 +45,14 @@ class ProductCreateView(CreateView):
         return context
     
     def post(self,request, **kwargs):
+        user = self.request.user
         form = self.form_class(self.request.POST,self.request.FILES)
         if form.is_valid():
             form.save()
             NotificationModel.objects.create(    
                 title = "New Product Added",
-                content = f"New User Account activated for {me}",
-                target = me,
+                content = f"New product added {user}",
+                target = user,
             )
             return redirect('product:listing')  
           
@@ -78,9 +79,15 @@ class StockCreateView(CreateView):
         return context
     
     def post(self,request, **kwargs):
+        user = self.request.user
         form = self.form_class(self.request.POST)
         if form.is_valid():
             form.save()
+            NotificationModel.objects.create(    
+                title = "New Stock Added",
+                content = f"{user} added a new stock",
+                target = user,
+            )
             return redirect('product:stock_listing')  
           
         return render(request,self.template_name,{'form':form})    

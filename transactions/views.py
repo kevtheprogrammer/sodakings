@@ -9,6 +9,8 @@ from django.contrib.auth.models import Group
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
+from product.models import NotificationModel
+
 from .models import *
 from .forms import *
  
@@ -57,6 +59,11 @@ class PurchaseEditView(CreateView):
             inst.maker = me
             inst.billno = object
             inst.save()
+            NotificationModel.objects.create(    
+                title = "New Stock Added",
+                content = f"{me} added a new stock",
+                target = me,
+            )
             return redirect(object.get_absolute_url())
         return None
     
